@@ -1,0 +1,18 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+p {
+  line-height: 0;
+}
+
+h1 {
+  margin-top: 3rem;
+  font-size: 48px;
+}
