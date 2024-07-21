@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
 
+import { router as authRouter } from "./routes/auth.js";
+
 // Configuración de las variables de entorno
 config();
 
@@ -11,7 +13,7 @@ const app = express();
 app.use(express.static("public"));
 
 // Rutas
-// TODO: auth - crear, login, renew
+app.use("/api/auth", authRouter);
 // TODO: CRUD - Eventos
 
 // Escuchar peticiones al servidor
