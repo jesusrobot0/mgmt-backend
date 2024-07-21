@@ -1,7 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 
-import { router as authRouter } from "./routes/auth.js";
+import { router as authRouter } from "./routes/auth";
 
 // Configuración de las variables de entorno
 config();
