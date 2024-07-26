@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { User } from "../models/User";
+import { generateJWT } from "../helpers/jwt";
 
 export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
@@ -24,10 +25,14 @@ export async function createUser(req: Request, res: Response) {
     // Guardar en la base de datos
     await user.save();
 
+    // Generar JWT
+    const token = await generateJWT(user.id, user.name);
+
     res.status(201).json({
       ok: true,
       uid: user.id,
       name: user.name,
+      token,
     });
   } catch (error) {
     res.status(500).json({
@@ -60,12 +65,14 @@ export async function loginUser(req: Request, res: Response) {
       });
     }
 
-    // Generar nuestro JWT
+    // Generar JWT
+    const token = await generateJWT(user.id, user.name);
 
     res.json({
       ok: true,
       uid: user.id,
       name: user.name,
+      token,
     });
   } catch (error) {
     res.status(500).json({
