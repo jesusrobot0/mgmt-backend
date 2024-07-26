@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import { User } from "../models/User";
 
 export async function createUser(req: Request, res: Response) {
@@ -15,6 +16,12 @@ export async function createUser(req: Request, res: Response) {
     }
 
     user = new User({ name, email, password });
+
+    // Encriptar contraseña
+    const salt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(password, salt);
+
+    // Guardar en la base de datos
     await user.save();
 
     res.status(201).json({
