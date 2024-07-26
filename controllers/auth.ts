@@ -1,9 +1,19 @@
 import { Request, Response } from "express";
+import { User } from "../models/User";
 
-export function createUser(req: Request, res: Response) {
+export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
 
-  res.status(201).json({ ok: true, name, email, password });
+  try {
+    const user = new User({ name, email, password });
+    await user.save();
+    res.status(201).json({ ok: true, msg: "Usuario registrado" });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: "Por favor contactese con servicio al cliente",
+    });
+  }
 }
 
 export function loginUser(req: Request, res: Response) {
