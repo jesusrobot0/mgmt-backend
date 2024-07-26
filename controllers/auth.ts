@@ -5,9 +5,23 @@ export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
 
   try {
-    const user = new User({ name, email, password });
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Ya existe un usuario con ese correo",
+      });
+    }
+
+    user = new User({ name, email, password });
     await user.save();
-    res.status(201).json({ ok: true, msg: "Usuario registrado" });
+
+    res.status(201).json({
+      ok: true,
+      uid: user.id,
+      name: user.name,
+    });
   } catch (error) {
     res.status(500).json({
       ok: false,
