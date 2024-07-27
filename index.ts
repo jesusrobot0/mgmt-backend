@@ -4,9 +4,11 @@ import { config } from "dotenv";
 import { router as authRouter } from "./routes/auth";
 import { dbConnection } from "./database/config";
 
+// Carga los tipos
+import "./types/express";
+
 // Configuración de las variables de entorno
 config();
-
 // Crear el servidor de express
 const app = express();
 

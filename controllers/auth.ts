@@ -82,6 +82,11 @@ export async function loginUser(req: Request, res: Response) {
   }
 }
 
-export function revalidateToken(req: Request, res: Response) {
-  res.json({ endpoint: "GET - renew jwt" });
+export async function revalidateToken(req: Request, res: Response) {
+  const { uid, name } = req;
+
+  // Generar JWT
+  const token = await generateJWT(String(uid), String(name));
+
+  res.json({ ok: true, token });
 }
