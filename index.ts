@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import { router as authRouter } from "./routes/auth";
+import { router as eventsRouter } from "./routes/events";
 import { dbConnection } from "./database/config";
 
 // Carga los tipos
@@ -27,7 +28,7 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/auth", authRouter);
-// TODO: CRUD - Eventos
+app.use("/api/events", eventsRouter);
 
 // Escuchar peticiones al servidor
 app.listen(process.env.PORT, () => {
