@@ -1,11 +1,11 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 interface Event {
   title: string;
   notes: string;
   start: Date;
   end: Date;
-  user: Schema.Types.ObjectId;
+  user: Types.ObjectId;
 }
 
 const EventSchema = new Schema<Event>({
@@ -27,7 +27,8 @@ const EventSchema = new Schema<Event>({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
 });
 
-const Event = model<Event>("Event", EventSchema);
+export const Event = model<Event>("Event", EventSchema);
