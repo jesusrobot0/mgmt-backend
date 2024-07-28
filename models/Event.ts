@@ -1,6 +1,7 @@
-import { model, Schema, Types } from "mongoose";
+import { Document, model, Schema, Types } from "mongoose";
 
-interface Event {
+// Extendi de document para poder acceder a __v y _id
+interface Event extends Document {
   title: string;
   notes: string;
   start: Date;
@@ -29,6 +30,14 @@ const EventSchema = new Schema<Event>({
     ref: "User",
     required: true,
   },
+});
+
+EventSchema.method("toJSON", function () {
+  const { __v, _id, ...object } = this.toObject();
+
+  object.id = _id;
+
+  return object;
 });
 
 export const Event = model<Event>("Event", EventSchema);
