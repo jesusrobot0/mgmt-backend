@@ -8,6 +8,7 @@ export function getEvents(req: Request, res: Response) {
 }
 
 export function createEvent(req: Request, res: Response) {
+  console.log(req.body);
   return res.json({
     ok: true,
     msg: "createEvent",
